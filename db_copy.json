@@ -1,0 +1,64 @@
+{
+  "__default__": {},
+   "baza1": {
+      "id1": {
+      "guard": "60c3338bd4224d71a444b5144008ce78",
+      "value": {
+        "_id": "id1",
+        "imie": "Pawel",
+        "nazwisko": "Binkowski",
+        "login": "pawel123"
+      }
+    },
+    "id1.tag1": {
+      "guard": "b1ea662ba76f42a7b2cef8502f2bc814",
+      "value": [
+        {
+          "_id": "id1",
+          "plik": "test1.txt",
+          "path": "C:\\Users\\osiolek\\Desktop\\test1.txt"
+        },
+        {
+          "_id": "id2",
+          "plik": "test2.txt",
+          "path": "C:\\Users\\osiolek\\Desktop\\test2.txt"
+        },
+        {
+          "_id": "id3",
+          "plik": "test4.txt",
+          "path": "C:\\Users\\osiolek\\Desktop\\test4.txt"
+        }
+      ]
+    },
+    "id1.tag2": {
+      "guard": "5e6f1184569a4606bbc60185a7139f25",
+      "value": [
+        {
+          "_id": "id1",
+          "plik": "test1.txt",
+          "path": "C:\\Users\\osiolek\\Desktop\\test1.txt"
+        }
+      ]
+    },
+    "id1.test1": {
+      "guard": "30202c2f94f148cc9a8d35a7146c08de",
+      "value": [
+        {
+          "_id": "id3",
+          "plik": "test4.txt",
+          "path": "C:\\Users\\osiolek\\Desktop\\test4.txt"
+        }
+      ]
+    },
+    "id1.test2": {
+      "guard": "db19327b098b49f2bb3766c4d2497420",
+      "value": [
+        {
+          "_id": "id3",
+          "plik": "test4.txt",
+          "path": "C:\\Users\\osiolek\\Desktop\\test4.txt"
+        }
+      ]
+    }
+  }
+}
