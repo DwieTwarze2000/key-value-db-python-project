@@ -1,7 +1,7 @@
 import pprint
 import uuid
 from magic_store.kv_idea.store import Store
-
+from magic_store.db.database import Database
 
 def test():
     store = Store()
@@ -29,49 +29,6 @@ def testLoad():
     print(result)
     pp = pprint.PrettyPrinter(indent=2)
     pp.pprint(store._store)
-
-def createDefaultDB():
-    store = Store()
-    #dokumenty
-    user1 = {
-        "_id": "id1",
-        "imie": "Pawel",
-        "nazwisko": "Binkowski",
-        "login": "pawel123"
-    }
-    tag1 = [
-        {
-            "_id": getId(),
-            "plik": "test1.txt",
-            "path": "C:\\Users\\osiolek\\Desktop\\test1.txt",
-        },
-        {
-            "_id": getId(),
-            "plik": "test2.txt",
-            "path": "C:\\Users\\osiolek\\Desktop\\test2.txt",
-        },
-    ]
-    tag2 = [{
-        "_id": getId(),
-        "plik": "test1.txt",
-        "path": "C:\\Users\\osiolek\\Desktop\\test1.txt",
-    }]
-    result = store.put("id1", user1, namespace="baza1")
-    result = store.put("id1.tag1", tag1, namespace="baza1")
-    result = store.put("id1.tag2", tag2, namespace="baza1")
-    pp = pprint.PrettyPrinter(indent=2)
-    pp.pprint(store._store)
-    result = store.save()
-    # print(result)
-
-
-def searchUser(user):
-    store = Store()
-    result = store.load()
-
-    result = store.get(user, namespace="baza1")
-
-    # print(result)
 
 
 def searchByTag(user, tags, searchType):
@@ -101,64 +58,44 @@ def searchByTag(user, tags, searchType):
                     else:
                         dic[file["plik"]] = 1
             print(dic)
-        
-def getId():
-    return uuid.uuid4().hex
-
-
-def addNewDocument(user, tags, document):
-    store = Store()
-    result = store.load()
-    result = store.get(user, namespace="baza1")
-    if result["code"] == 203:
-        print("User is not existing!")
-        return
-    for tag in tags:
-        document["_id"] = getId()
-        data = store.get(user + "." + tag, namespace="baza1")
-        if data["code"] == 203:
-            result = store.put(user+ "." + tag, [document], namespace="baza1")
-        else:
-            docs = data["value"]
-            docs.append(document)
-            result = store.put(user + "." + tag, docs, namespace="baza1", guard=data["guard"])
-
-        pp = pprint.PrettyPrinter(indent=2)
-        pp.pprint(store._store)
-        result = store.save()
-    # print(result)
-
-def addUser(document): 
-    store = Store()
-    result = store.load()
-    result = store.put(document["_id"], document, namespace="baza1")
-    pp = pprint.PrettyPrinter(indent=2)
-    pp.pprint(store._store)
-    result = store.save()
-    # print(result)
-
 
 if __name__ == '__main__':
-    createDefaultDB()
-    # searchUser("pawel123")
-    testDoc = {
-        "plik": "test777.txt",
-        "path": "C:\\Users\\osiolek\\Desktop\\test4.txt",
+
+    database = Database()
+
+    user = {
+        "_id": "id1",
+        "imie": "Pawel",
+        "nazwisko": "Binkowski",
+        "login": "pawel123"
     }
-    addNewDocument("id1", ["test1","test2","tag1"], testDoc)
-
-    user2 = {
-        "_id": "id2",
-        "imie": "Jan",
-        "nazwisko": "Kowalski",
-        "login": "jan123"
+    database.createUser(user)
+    database.createUser(user)
+    file1 = {
+        "plik": "morze.jpg",
+        "path": "C:\\Users\\osiolek\\Desktop\\morze.jpg",
     }
-    addUser(user2)
+    file2 = {
+        "plik": "latarnia_morska.jpg",
+        "path": "C:\\Users\\osiolek\\Desktop\\latarnia_morska.jpg",
+    }
+    file3 = {
+        "plik": "zgierz.jpg",
+        "path": "C:\\Users\\osiolek\\Desktop\\zgierz.jpg",
+    }
+    file4 = {
+        "plik": "arduinoProject.cpp",
+        "path": "C:\\Users\\osiolek\\Desktop\\arduinoProject.cpp",
+    }
 
-    addNewDocument("id2", ["HEHE", "swieta2922"], testDoc)
-    # searchType = "and"
+    database.createFile("id1", ["morze", "wakacje2022"], file1)
+    database.createFile("id1", ["morze", "wakacje2022"], file2)
+    database.createFile("id1", ["zgierz", "wakacje2022"], file3)
+    database.createFile("id1", ["school"], file4)
+    database.createFile("asdasdasd", ["scl"], file4)
 
-    # searchByTag("id1", ["tag1", "tag2", "tag3", "test"], searchType)
-
+    database.searchUser("id1")
+    database.searchUser("id2")
+    database.searchFileByTags("id1", ["morze", "wakacje2022"], "or")
+    
 # dodac mozliwość wyszukiwania po kilku tagach
-#dodac dodawanie

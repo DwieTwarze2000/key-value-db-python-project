@@ -1,23 +1,28 @@
 {
-    "__default__": {},
-    "baza1": {
-        "id1": { "guard": "3deb4ac6ce4145f39ab81464ecd99e1f", "value": { "_id": "id1", "imie": "Pawel", "nazwisko": "Binkowski", "login": "pawel123" } },
-        "id1.tag1": {
-            "guard": "75c1afe1da8b45c68fd35dc1dca25187",
+    "__default__": {
+        "id1": { "guard": "4eb36513f3544181bbf82692965ac1da", "value": { "_id": "id1", "imie": "Pawel", "nazwisko": "Binkowski", "login": "pawel123" } },
+        "id1.morze": {
+            "guard": "6316360f2be845a882eabd294b399240",
             "value": [
-                { "_id": "73799e3121b346cfb1251b47e5b73c17", "plik": "test1.txt", "path": "C:\\Users\\osiolek\\Desktop\\test1.txt" },
-                { "_id": "d987bf7c7fc34f0891dcea6c7fa86cbf", "plik": "test2.txt", "path": "C:\\Users\\osiolek\\Desktop\\test2.txt" },
-                { "plik": "test777.txt", "path": "C:\\Users\\osiolek\\Desktop\\test4.txt", "_id": "cb73570429dc4479b3eb7c234fe6bea5" }
+                { "plik": "morze.jpg", "path": "C:\\Users\\osiolek\\Desktop\\morze.jpg", "_id": "ee5f7a66a27d433facd6315b16618433" },
+                { "plik": "latarnia_morska.jpg", "path": "C:\\Users\\osiolek\\Desktop\\latarnia_morska.jpg", "_id": "6da608209028446da745cc7fe0ac3bb1" }
             ]
         },
-        "id1.tag2": { "guard": "503cb09866524c68b2554d0929cda8ac", "value": [{ "_id": "38030708834b41a19183993b7e6c2ca5", "plik": "test1.txt", "path": "C:\\Users\\osiolek\\Desktop\\test1.txt" }] },
-        "id1.test1": { "guard": "e5b3dce2a7474ba5841edd10bc7ffaa4", "value": [{ "plik": "test777.txt", "path": "C:\\Users\\osiolek\\Desktop\\test4.txt", "_id": "cb73570429dc4479b3eb7c234fe6bea5" }] },
-        "id1.test2": { "guard": "380edb8dc85e42c0829bf98cfcb68bf4", "value": [{ "plik": "test777.txt", "path": "C:\\Users\\osiolek\\Desktop\\test4.txt", "_id": "cb73570429dc4479b3eb7c234fe6bea5" }] },
-        "id2": { "guard": "ecb510000eb74c9cba0981b0ee2b15af", "value": { "_id": "id2", "imie": "Jan", "nazwisko": "Kowalski", "login": "jan123" } },
-        "id2.HEHE": { "guard": "38c7de2ffa49495e9bac87de70cdef0d", "value": [{ "plik": "test777.txt", "path": "C:\\Users\\osiolek\\Desktop\\test4.txt", "_id": "6dee636d96614ff2a559a3ce6c598956" }] },
-        "id2.swieta2922": {
-            "guard": "4d8aa977851e4e8483d901aabd3b560a",
-            "value": [{ "plik": "test777.txt", "path": "C:\\Users\\osiolek\\Desktop\\test4.txt", "_id": "6dee636d96614ff2a559a3ce6c598956" }]
+        "id1.wakacje2022": {
+            "guard": "849ec1405745459f96ac2cf38b5c3a14",
+            "value": [
+                { "plik": "morze.jpg", "path": "C:\\Users\\osiolek\\Desktop\\morze.jpg", "_id": "ee5f7a66a27d433facd6315b16618433" },
+                { "plik": "latarnia_morska.jpg", "path": "C:\\Users\\osiolek\\Desktop\\latarnia_morska.jpg", "_id": "6da608209028446da745cc7fe0ac3bb1" },
+                { "plik": "zgierz.jpg", "path": "C:\\Users\\osiolek\\Desktop\\zgierz.jpg", "_id": "9aa9a2e1785f42be92acf8551488e5c8" }
+            ]
+        },
+        "id1.zgierz": {
+            "guard": "fba1da12bcf845af91cb360818988f72",
+            "value": [{ "plik": "zgierz.jpg", "path": "C:\\Users\\osiolek\\Desktop\\zgierz.jpg", "_id": "9aa9a2e1785f42be92acf8551488e5c8" }]
+        },
+        "id1.school": {
+            "guard": "f9619a08787a436b9da066d0821e191e",
+            "value": [{ "plik": "arduinoProject.cpp", "path": "C:\\Users\\osiolek\\Desktop\\arduinoProject.cpp", "_id": "39e083d33d684e07863aa874e51d42f7" }]
         }
     }
 }
