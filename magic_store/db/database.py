@@ -176,3 +176,66 @@ class Database:
             print(MESSAGES.FILES_FOUND)
             print(result) 
 
+    def deleteTag(self, userKey:str, tag:str):
+        """Deletes tag under specific user"""
+        
+        self.store = Store()
+        result = self.store.load()
+        result = self.store.get(userKey + "." + tag, namespace=self.namespace)
+        if result["success"] == False:
+            print(MESSAGES.TAG_NOT_EXISTS)
+            return
+
+        result = self.store.delete(userKey + "." + tag, namespace=self.namespace, guard=result["guard"])
+        result = self.store.save()
+        print(MESSAGES.TAG_DELETED)
+        # self._printDb()
+
+    def deleteFileFromTag(self, userKey:str, tag:str, fileName:str):
+        """Deletes file from specific tag"""
+        self.store = Store()
+        result = self.store.load()
+        result = self.store.get(userKey + "." + tag, namespace=self.namespace)
+        if result["success"] == False:
+            print(MESSAGES.TAG_NOT_EXISTS)
+            return
+        files = result["value"]
+        for file in files:
+            if file["plik"] == fileName:
+                files.remove(file)
+                result = self.store.put(userKey + "." + tag, files, namespace=self.namespace, guard=result["guard"])
+                result = self.store.save()
+                print(MESSAGES.FILE_DELETED)
+                return
+        print(MESSAGES.FILE_NOT_EXISTS)
+        return
+
+    def deleteFileFromAllTags(self, userKey:str, fileName:str):
+        """Deletes file from all tags under specific user"""
+        count = 0
+        self.store = Store()
+        result = self.store.load()
+        result = self.store.get(userKey, namespace=self.namespace)
+        if result["success"] == False:
+            print(MESSAGES.USER_NOT_EXISTS)
+            return
+        userKeys = self._getAllUserKeys(userKey)
+        for key in userKeys:
+            if key == userKey:
+                continue
+            data = self.store.get(key, namespace=self.namespace)
+            
+            if data["success"] == False:
+                continue
+            
+            files = data["value"]
+            for file in files:
+                if file["plik"] == fileName:
+                    files.remove(file)
+                    result = self.store.put(key, files, namespace=self.namespace, guard=data["guard"])
+                    result = self.store.save()
+                    count += 1
+        if count == 0:
+            print(MESSAGES.FILE_NOT_EXISTS)
+            return
+        print(MESSAGES.FILE_DELETED, "from {} tags".format(count))
