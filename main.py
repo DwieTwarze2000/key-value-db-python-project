@@ -99,6 +99,7 @@ if __name__ == '__main__':
     database.createFile("id1", ["zgierz", "wakacje2022"], file3)
     database.createFile("id1", ["school"], file4)
     database.createFile("asdasdasd", ["scl"], file4)
+    database.deleteUser("id1")
 
     # database.searchFileByTags("id1", ["morze", "wakacje2022"], "or")
     

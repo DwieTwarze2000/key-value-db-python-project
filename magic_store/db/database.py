@@ -20,6 +20,22 @@ class Database:
         result = self.store.load()
         pp = pprint.PrettyPrinter(indent=2)
         pp.pprint(self.store._store)
+    
+    def _getAllUserKeys(self, userKey):
+        """Returns list of keys for specific user"""
+        self.store = Store()
+        result = self.store.load()
+        
+        namespace = self.namespace
+        if namespace == None:
+            namespace = "__default__"
+        
+        tags = []
+        for key in self.store._store[namespace].keys():
+            if key.split(".")[0] == userKey:
+                tags.append(key)
+        return tags
+
 
     def createUser(self, document, key):
         """Creates user in database, document is a dictionary with user data, key is a key under which user will be stored"""
@@ -74,7 +90,12 @@ class Database:
         if result["success"] == False:
             print(MESSAGES.USER_NOT_EXISTS)
             return
-        result = self.store.delete(key, namespace=self.namespace, guard=result["guard"])
+
+        userKeys = self._getAllUserKeys(key)
+        for userKey in userKeys:
+            data = self.store.get(userKey, namespace=self.namespace)
+            result = self.store.delete(userKey, namespace=self.namespace, guard=data["guard"])
+        
         result = self.store.save()
         print(MESSAGES.USER_DELETED)
         # self._printDb()
