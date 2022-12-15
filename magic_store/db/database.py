@@ -43,7 +43,6 @@ class Database:
         if result["success"] == False:
             print(MESSAGES.USER_NOT_EXISTS)
             return
-
         document["_id"] = self._getId()
         
         for tag in tags:
@@ -54,7 +53,7 @@ class Database:
                 data["value"].append(document)
                 result = self.store.put(user + "." + tag, data["value"], namespace=self.namespace, guard=data["guard"])
         
-        result = self.store.save()
+        # result = self.store.save()
         print(MESSAGES.FILE_ADDED)
         # self._printDb()
     
@@ -67,6 +66,20 @@ class Database:
             return
         print(result)
 
+    def updateUser(self, userid, user):
+        self.store = Store()
+        result = self.store.load()
+        if "_id" in user.keys():
+            print(MESSAGES.INVALID_ID)
+            return
+        data = self.store.get(user, namespace=self.namespace)
+        if data["success"] == False:
+            print(MESSAGES.USER_NOT_EXISTS)
+            return
+        result = self.store.put(userid, user, namespace=self.namespace, guard=data["guard"])
+        print(MESSAGES.USER_UPDATED)                
+
+
     def searchFileByTags(self, user, tags, searchType):
         self.store = Store()
         result = self.store.load()
@@ -77,6 +90,9 @@ class Database:
                     print(MESSAGES.TAG_NOT_EXISTS, tag)
                     next
                 print(result)
+        elif searchType == "and":
+            pass
+
 
         # elif searchType == "and":
         #     if isinstance(tags, list):
