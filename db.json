@@ -1,1 +1,68 @@
-{"__default__": {"id1": {"guard": "ebc66967c0e8412196d09101dbd03feb", "value": {"_id": "id1", "imie": "Pawel", "nazwisko": "Binkowski", "login": "pawel123"}}}}
+{
+  "__default__": {
+    "id1": {
+      "guard": "1757d3a420ab4637a4f92fd36c220067",
+      "value": {
+        "imie": "Pawelek",
+        "nazwisko": "Binkowski",
+        "login": "pawel123456",
+        "_id": "3b96b68278f7464d94f0e2996678e6eb"
+      }
+    },
+    "id1.morze": {
+      "guard": "cd0a2ae0475a4b229d97926ea2fcf2a9",
+      "value": [
+        {
+          "plik": "morze.jpg",
+          "path": "C:\\Users\\osiolek\\Desktop\\morze.jpg",
+          "_id": "afc882e8d15a47378deb2890d382987d"
+        },
+        {
+          "plik": "latarnia_morska.jpg",
+          "path": "C:\\Users\\osiolek\\Desktop\\latarnia_morska.jpg",
+          "_id": "d3baddf5bdc345799caf2ee8a2466eda"
+        }
+      ]
+    },
+    "id1.wakacje2022": {
+      "guard": "cf0f2b619a104f7e91091c772c278aef",
+      "value": [
+        {
+          "plik": "morze.jpg",
+          "path": "C:\\Users\\osiolek\\Desktop\\morze.jpg",
+          "_id": "afc882e8d15a47378deb2890d382987d"
+        },
+        {
+          "plik": "latarnia_morska.jpg",
+          "path": "C:\\Users\\osiolek\\Desktop\\latarnia_morska.jpg",
+          "_id": "d3baddf5bdc345799caf2ee8a2466eda"
+        },
+        {
+          "plik": "zgierz.jpg",
+          "path": "C:\\Users\\osiolek\\Desktop\\zgierz.jpg",
+          "_id": "3f2da972bb234a95995d01290bf070e7"
+        }
+      ]
+    },
+    "id1.zgierz": {
+      "guard": "1cdb11cf14174e26828d8939e318a6f9",
+      "value": [
+        {
+          "plik": "zgierz.jpg",
+          "path": "C:\\Users\\osiolek\\Desktop\\zgierz.jpg",
+          "_id": "3f2da972bb234a95995d01290bf070e7"
+        }
+      ]
+    },
+    "id1.school": {
+      "guard": "6a0e027b7a494572885662dbf8aa5536",
+      "value": [
+        {
+          "plik": "arduinoProject.cpp",
+          "path": "C:\\Users\\osiolek\\Desktop\\arduinoProject.cpp",
+          "_id": "9022dfe624ca48eaa5d04670d2763c6a"
+        }
+      ]
+    }
+  }
+}

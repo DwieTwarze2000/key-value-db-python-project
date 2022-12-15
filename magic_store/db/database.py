@@ -11,34 +11,79 @@ class Database:
         self.store.save()
 
     def _getId(self):
+        """Generates random id for document"""
         return uuid.uuid4().hex
 
     def _printDb(self):
+        """Prints database"""
         self.store = Store()
         result = self.store.load()
         pp = pprint.PrettyPrinter(indent=2)
         pp.pprint(self.store._store)
 
-    def createUser(self, document):
+    def createUser(self, document, key):
+        """Creates user in database, document is a dictionary with user data, key is a key under which user will be stored"""
         self.store = Store()
         result = self.store.load()
         
-        result = self.store.get(document["_id"], namespace=self.namespace)
+        result = self.store.get(key, namespace=self.namespace)
 
         if result["success"] == False:
-            result = self.store.put(document["_id"], document, namespace=self.namespace)
+            id = self._getId()
+            document["_id"] = id
+            result = self.store.put(key, document, namespace=self.namespace)
             result = self.store.save()
             print(MESSAGES.USER_ADDED)
         else:
             print(MESSAGES.USER_EXISTS)
             return
         # self._printDb()
+    
+    def searchUser(self, key):
+        """Searches for user under specific key"""
+        self.store = Store()
+        result = self.store.load()
+        result = self.store.get(key, namespace=self.namespace)
+        if result["success"] == False:
+            print(MESSAGES.USER_NOT_EXISTS)
+            return
+        print(result)
 
-    def createFile(self, user, tags, document):
+    def updateUser(self, key, user):
+        """Updates user data, user is a dictionary with new data, key is a key under which user is stored"""
+        self.store = Store()
+        result = self.store.load()
+        if "_id" in user.keys():
+            print(MESSAGES.ID_CHANGE_NOT_ALLOWED)
+            return
+        data = self.store.get(key, namespace=self.namespace)
+        if data["success"] == False:
+            print(MESSAGES.USER_NOT_EXISTS)
+            return
+        id = data["value"]["_id"]
+        user["_id"] = id
+        result = self.store.put(key, user, namespace=self.namespace, guard=data["guard"])
+        result = self.store.save()
+        print(MESSAGES.USER_UPDATED)                
+
+    def deleteUser(self, key):
+        """Deletes user under specific key"""
+        self.store = Store()
+        result = self.store.load()
+        result = self.store.get(key, namespace=self.namespace)
+        if result["success"] == False:
+            print(MESSAGES.USER_NOT_EXISTS)
+            return
+        result = self.store.delete(key, namespace=self.namespace, guard=result["guard"])
+        result = self.store.save()
+        print(MESSAGES.USER_DELETED)
+        # self._printDb()
+
+    def createFile(self, userKey, tags, document):
         self.store = Store()
         result = self.store.load()
         
-        result = self.store.get(user, namespace=self.namespace)
+        result = self.store.get(userKey, namespace=self.namespace)
         # print(result, "result")
         if result["success"] == False:
             print(MESSAGES.USER_NOT_EXISTS)
@@ -46,39 +91,16 @@ class Database:
         document["_id"] = self._getId()
         
         for tag in tags:
-            data = self.store.get(user + "." + tag, namespace=self.namespace)
+            data = self.store.get(userKey + "." + tag, namespace=self.namespace)
             if data["success"] == False:
-                result = self.store.put(user + "." + tag, [document], namespace=self.namespace)
+                result = self.store.put(userKey + "." + tag, [document], namespace=self.namespace)
             else:
                 data["value"].append(document)
-                result = self.store.put(user + "." + tag, data["value"], namespace=self.namespace, guard=data["guard"])
+                result = self.store.put(userKey + "." + tag, data["value"], namespace=self.namespace, guard=data["guard"])
         
-        # result = self.store.save()
+        result = self.store.save()
         print(MESSAGES.FILE_ADDED)
         # self._printDb()
-    
-    def searchUser(self, user):
-        self.store = Store()
-        result = self.store.load()
-        result = self.store.get(user, namespace=self.namespace)
-        if result["success"] == False:
-            print(MESSAGES.USER_NOT_EXISTS)
-            return
-        print(result)
-
-    def updateUser(self, userid, user):
-        self.store = Store()
-        result = self.store.load()
-        if "_id" in user.keys():
-            print(MESSAGES.INVALID_ID)
-            return
-        data = self.store.get(user, namespace=self.namespace)
-        if data["success"] == False:
-            print(MESSAGES.USER_NOT_EXISTS)
-            return
-        result = self.store.put(userid, user, namespace=self.namespace, guard=data["guard"])
-        print(MESSAGES.USER_UPDATED)                
-
 
     def searchFileByTags(self, user, tags, searchType):
         self.store = Store()

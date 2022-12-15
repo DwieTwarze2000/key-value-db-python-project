@@ -64,13 +64,19 @@ if __name__ == '__main__':
     database = Database()
 
     user = {
-        "_id": "id1",
         "imie": "Pawel",
         "nazwisko": "Binkowski",
         "login": "pawel123"
     }
-    database.createUser(user)
-    database.createUser(user)
+    database.createUser(user, "id1")
+    database.searchUser("id1")
+    userUpdate = {
+        "imie": "Pawelek",
+        "nazwisko": "Binkowski",
+        "login": "pawel123456",
+    }
+    database.updateUser("id1", userUpdate)
+    # database.deleteUser("id1")
     file1 = {
         "plik": "morze.jpg",
         "path": "C:\\Users\\osiolek\\Desktop\\morze.jpg",
@@ -94,19 +100,6 @@ if __name__ == '__main__':
     database.createFile("id1", ["school"], file4)
     database.createFile("asdasdasd", ["scl"], file4)
 
-
-    database.updateUser("id1",user)
-    database.updateUser("id2",user)
-    user = {
-        "imie": "Jacek",
-        "nazwisko": "Kowalski",
-        "login": "ABC",
-        "test": "test"
-    }
-    database.updateUser("0001001203", user)
-    database.updateUser("id1", user)
-    # database.searchUser("id1")
-    # database.searchUser("id2")
     # database.searchFileByTags("id1", ["morze", "wakacje2022"], "or")
     
 # dodac mozliwość wyszukiwania po kilku tagach
