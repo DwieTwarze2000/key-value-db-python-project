@@ -30,35 +30,6 @@ def testLoad():
     pp = pprint.PrettyPrinter(indent=2)
     pp.pprint(store._store)
 
-
-def searchByTag(user, tags, searchType):
-    store = Store()
-    result = store.load()
-    
-    if searchType == "or":
-        if isinstance(tags, list):
-            for tag in tags:
-                result = store.get(user + "." + tag, namespace="baza1")
-                if result['code'] == 203:
-                    print("there is no tag", tag)
-                    next
-                print(result)
-        else:
-            result = store.get(user + "." + tags, namespace="baza1")
-            if result["code"] == 203:
-                print("there is no tag", tags)
-
-    elif searchType == "and":
-        if isinstance(tags, list):
-            dic = {}
-            for tag in tags:
-                for file in tag:
-                    if dic[file["plik"]]:
-                        dic[file["plik"]] += 1
-                    else:
-                        dic[file["plik"]] = 1
-            print(dic)
-
 if __name__ == '__main__':
 
     database = Database()
@@ -99,8 +70,9 @@ if __name__ == '__main__':
     database.createFile("id1", ["zgierz", "wakacje2022"], file3)
     database.createFile("id1", ["school"], file4)
     database.createFile("asdasdasd", ["scl"], file4)
-    database.deleteUser("id1")
+    # database.deleteUser("id1")
 
-    # database.searchFileByTags("id1", ["morze", "wakacje2022"], "or")
+    database.searchFileByTags("id1", ["morze", "wakacje2022"], 2)
+    database.searchFileByTags("id1", ["morze", "asdasdasd"], 2)
     
 # dodac mozliwość wyszukiwania po kilku tagach

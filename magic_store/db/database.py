@@ -5,10 +5,13 @@ import pprint
 import uuid
 
 class Database:
-    def __init__(self, namespace=None):
+    def __init__(self, namespace: str=None):
         self.store = Store()
         self.namespace = namespace
         self.store.save()
+
+        self.FOREACH_TAG_SEARCH_TYPE = 1
+        self.ALL_TAG_SEARCH_TYPE = 2
 
     def _getId(self):
         """Generates random id for document"""
@@ -21,7 +24,7 @@ class Database:
         pp = pprint.PrettyPrinter(indent=2)
         pp.pprint(self.store._store)
     
-    def _getAllUserKeys(self, userKey):
+    def _getAllUserKeys(self, userKey: str):
         """Returns list of keys for specific user"""
         self.store = Store()
         result = self.store.load()
@@ -37,8 +40,12 @@ class Database:
         return tags
 
 
-    def createUser(self, document, key):
-        """Creates user in database, document is a dictionary with user data, key is a key under which user will be stored"""
+    def createUser(self, document: dict, key: str):
+        """
+        Creates user in database \n
+        Document is a dictionary with user data \n
+        Key is a key under which user will be stored
+        """
         self.store = Store()
         result = self.store.load()
         
@@ -55,7 +62,7 @@ class Database:
             return
         # self._printDb()
     
-    def searchUser(self, key):
+    def searchUser(self, key: str):
         """Searches for user under specific key"""
         self.store = Store()
         result = self.store.load()
@@ -65,8 +72,12 @@ class Database:
             return
         print(result)
 
-    def updateUser(self, key, user):
-        """Updates user data, user is a dictionary with new data, key is a key under which user is stored"""
+    def updateUser(self, key:str, user:dict):
+        """
+        Updates user data \n
+        User is a dictionary with new data \n
+        Key is a key under which user is stored
+        """
         self.store = Store()
         result = self.store.load()
         if "_id" in user.keys():
@@ -82,7 +93,7 @@ class Database:
         result = self.store.save()
         print(MESSAGES.USER_UPDATED)                
 
-    def deleteUser(self, key):
+    def deleteUser(self, key: str):
         """Deletes user under specific key"""
         self.store = Store()
         result = self.store.load()
@@ -100,7 +111,11 @@ class Database:
         print(MESSAGES.USER_DELETED)
         # self._printDb()
 
-    def createFile(self, userKey, tags, document):
+    def createFile(self, userKey:str, tags:list, document:dict):
+        """
+        Creates file for specific user \n
+        Tags is a list of tags under which file will be stored \n
+        Document is a dictionary with file data"""
         self.store = Store()
         result = self.store.load()
         
@@ -123,27 +138,41 @@ class Database:
         print(MESSAGES.FILE_ADDED)
         # self._printDb()
 
-    def searchFileByTags(self, user, tags, searchType):
+    def searchFileByTags(self, userKey:str, tags:list, searchType:int):
+        """
+        Searches for file under specific tags \n
+        Tags is a list of tags \n
+        SearchType is a type of search, can be "FOREACH TAG SEARCH"-1 or "ALL TAGS SEARCH"-2 
+        """
         self.store = Store()
         result = self.store.load()
-        if searchType == "or":
+        if searchType == 1:
             for tag in tags:
-                result = self.store.get(user + "." + tag, namespace=self.namespace)
+                result = self.store.get(userKey + "." + tag, namespace=self.namespace)
                 if result['success'] == False:
-                    print(MESSAGES.TAG_NOT_EXISTS, tag)
+                    print(MESSAGES.TAG_NOT_EXISTS)
                     next
-                print(result)
-        elif searchType == "and":
-            pass
+                else:
+                    print("tag =",tag, result)
+        elif searchType == 2:
+            files = {}
+            for tag in tags:
+                data = self.store.get(userKey + "." + tag, namespace=self.namespace)
+                if data['success'] == False:
+                    print(MESSAGES.TAG_NOT_EXISTS)
+                    return
+                for file in data["value"]:
+                    if file["_id"] in files.keys():
+                        files[file["_id"]]["count"] += 1
+                    else:
+                        files[file["_id"]] = {
+                            "count": 1,
+                            "file": file
+                        }
+            result = []
+            for file in files.values():
+                if file["count"] == len(tags):
+                    result.append(file["file"])
+            print(MESSAGES.FILES_FOUND)
+            print(result) 
 
-
-        # elif searchType == "and":
-        #     if isinstance(tags, list):
-        #         dic = {}
-        #         for tag in tags:
-        #             for file in tag:
-        #                 if dic[file["plik"]]:
-        #                     dic[file["plik"]] += 1
-        #                 else:
-        #                     dic[file["plik"]] = 1
-        #         print(dic)

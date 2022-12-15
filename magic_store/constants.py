@@ -13,6 +13,7 @@ class MESSAGES:
     FILE_ADDED_CODE = "1x02"
     USER_UPDATED_CODE = '1x03'
     USER_DELETED_CODE = '1x04'
+    FILES_FOUND_CODE = '1x05'
 
     INCORRECT_NAMESPACE = {"code": INCORRECT_NAMESPACE_CODE, "success": False, "description": "Incorrect (nonexisting) namespace"}
     INCORRECT_TYPE = {"code": INCORRECT_TYPE_CODE, "success": False, "description": "Incorrect type"}
@@ -28,6 +29,7 @@ class MESSAGES:
     FILE_ADDED = {"code": FILE_ADDED_CODE, "success":True, "description": "File added successfully"}
     USER_UPDATED = {"code": USER_UPDATED_CODE, "success":True, "description": "User updated successfully"}
     USER_DELETED = {"code": USER_DELETED_CODE, "success":True, "description": "User deleted successfully"}
+    FILES_FOUND = {"code": FILES_FOUND_CODE, "success":True, "description": "Files found successfully"}
     
     @classmethod
     def ok(cls, value, guard):
