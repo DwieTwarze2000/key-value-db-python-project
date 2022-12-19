@@ -239,3 +239,38 @@ class Database:
             print(MESSAGES.FILE_NOT_EXISTS)
             return
         print(MESSAGES.FILE_DELETED, "from {} tags".format(count))
+
+    def addTagToFile(self, user: str, newTag: str, fileId: str):
+        """Adding new Tag to existing File"""
+        self.store = Store()
+
+        result = self.store.load()
+        result = self.store.get(user, namespace=self.namespace)
+        if result["success"] == False:
+            print(MESSAGES.USER_NOT_EXISTS)
+            return
+
+        userKeys = self._getAllUserKeys(user)
+
+        for key in userKeys:
+            if key == user:
+                continue
+
+            result = self.store.get(key, namespace=self.namespace)
+
+            files = result["value"]
+
+            for file in files:
+                if file["_id"] == fileId:
+                    data = self.store.get(user+"."+newTag, namespace=self.namespace)
+                    if data["success"] == False:
+                        result = self.store.put(user + "." + newTag, [file], namespace=self.namespace)
+                        self.store.save()
+                        print(MESSAGES.TAG_ADDED)
+                        return
+                    else:
+                        data["value"].append(file)
+                        result = self.store.put(user + "." + newTag, data["value"], namespace=self.namespace, guard=data["guard"])
+                        self.store.save()
+                        print(MESSAGES.TAG_ADDED)
+                        return

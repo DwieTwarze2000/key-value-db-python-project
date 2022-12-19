@@ -72,11 +72,11 @@ if __name__ == '__main__':
     database.createFile("asdasdasd", ["scl"], file4)
     # database.deleteUser("id1")
 
-    database.searchFileByTags("id1", ["morze", "wakacje2022"], 2)
-    database.searchFileByTags("id1", ["morze", "asdasdasd"], 2)
+    # database.searchFileByTags("id1", ["morze", "wakacje2022"], 2)
+    # database.searchFileByTags("id1", ["morze", "asdasdasd"], 2)
     
-    # database.deleteTag("id1", "morze")
-    # database.deleteFileFromTag("id1", "morze", "morze.jpg")
-    database.deleteFileFromAllTags("id1", "latarnia_morska.jpg")
-    database.deleteFileFromAllTags("id1", "latarnia_morska.jpg")
+    # # database.deleteTag("id1", "morze")
+    # # database.deleteFileFromTag("id1", "morze", "morze.jpg")
+    # database.deleteFileFromAllTags("id1", "latarnia_morska.jpg")
+    # database.deleteFileFromAllTags("id1", "latarnia_morska.jpg")
 # dodac mozliwość wyszukiwania po kilku tagach
