@@ -33,7 +33,7 @@ def testLoad():
 if __name__ == '__main__':
 
     database = Database()
-
+    database.createEmptyDb()
     user = {
         "imie": "Pawel",
         "nazwisko": "Binkowski",

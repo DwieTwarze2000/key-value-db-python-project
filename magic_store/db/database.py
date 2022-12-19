@@ -8,10 +8,13 @@ class Database:
     def __init__(self, namespace: str=None):
         self.store = Store()
         self.namespace = namespace
-        self.store.save()
-
         self.FOREACH_TAG_SEARCH_TYPE = 1
         self.ALL_TAG_SEARCH_TYPE = 2
+
+    def createEmptyDb(self):
+        """Creates empty database"""
+        self.store = Store()
+        self.store.save()
 
     def _getId(self):
         """Generates random id for document"""
